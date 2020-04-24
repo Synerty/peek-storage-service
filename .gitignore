@@ -1,0 +1,27 @@
+build
+dist
+_trial_temp
+log
+.project
+.pydevproject
+run_logs
+*~
+.AppleDouble
+.DS_Store
+
+
+# Ignore pycharm project files
+.idea/
+
+
+
+# Ignore python compiled files
+__pycache__
+
+
+dist/
+build/
+*.egg-info/
+MANIFEST
+
+.scannerwork/
