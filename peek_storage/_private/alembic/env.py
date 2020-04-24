@@ -1,10 +1,7 @@
-from sqlalchemy import engine_from_config, pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 from sqlalchemy.dialects.mssql.base import MSDialect
 from sqlalchemy.dialects.postgresql.base import PGDialect
-from peek_platform.util.LogUtil import setupPeekLogger
-from peek_plugin_base.PeekVortexUtil import peekStorageName
 
 global config
 config = context.config

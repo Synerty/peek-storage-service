@@ -17,9 +17,9 @@ from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.sql.expression import cast, null, case
 from sqlalchemy.sql.schema import Index
 from sqlalchemy.types import Integer, String, Boolean
+from vortex.Tuple import Tuple, addTupleType
 
 from peek_storage.storage.DeclarativeBase import DeclarativeBase
-from vortex.Tuple import Tuple, addTupleType
 
 __author__ = 'synerty'
 
@@ -138,7 +138,7 @@ class SettingProperty(PolymorphicVerticalProperty, Tuple, DeclarativeBase):
     """A setting property."""
 
     __tablename__ = 'SettingProperty'
-    __tupleType__ = 'c.s.p.setting.property'
+    __tupleType__ = 'peek_storage.setting.property'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     settingId = Column(ForeignKey('Setting.id'), primary_key=True, nullable=False)
@@ -165,7 +165,7 @@ class Setting(ProxiedDictMixin, Tuple, DeclarativeBase):
     """an Animal"""
 
     __tablename__ = 'Setting'
-    __tupleType__ = 'c.s.p.setting'
+    __tupleType__ = 'peek_storage.setting'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
@@ -267,23 +267,6 @@ def globalSetting(key: Optional[str] = None, value: Optional[Any] = None):
     return _getSetting("Global", globalProperties, key=key, value=value)
 
 
-EMAIL_SENDER = PropertyKey('Email Sender', 'Peek@company.com',
-                           propertyDict=globalProperties)
-
-EMAIL_SMTP_HOST = PropertyKey('Email SMTP Server', 'smtp.company.com',
-                              propertyDict=globalProperties)
-
-EMAIL_SERVER_ADMIN = PropertyKey('Server Admin Email Address',
-                                 'backend@company.com',
-                                 propertyDict=globalProperties)
-
-SYSTEM_NAME = PropertyKey('Server Name', 'Peek Server',
-                          propertyDict=globalProperties)
-
-SYSTEM_DESCRIPTION = PropertyKey('Server Description',
-                                 'Peek - Extensible Model Viewer',
-                                 propertyDict=globalProperties)
-
 # =============================================================================
 # INTERNAL PROPERTIES
 # =============================================================================
@@ -294,10 +277,6 @@ internalProperties: Dict[str, PropertyKey] = {}
 def internalSetting(key=None, value=None):
     return _getSetting("Internal", internalProperties, key=key, value=value)
 
-
-CAPABILITIES_KEY = PropertyKey('capabilities.key',
-                               None,
-                               propertyDict=internalProperties)
 
 # =============================================================================
 # SERVICES PROPERTIES

@@ -1,9 +1,12 @@
 from pathlib import Path
 
-from peek_platform import PeekPlatformConfig
-from peek_plugin_base.server.PeekPlatformServerHttpHookABC import PeekPlatformServerHttpHookABC
-from peek_plugin_base.server.PeekPlatformAdminHttpHookABC import PeekPlatformAdminHttpHookABC
 from peek_plugin_base.server.PeekStoragePlatformHookABC import PeekStoragePlatformHookABC
+
+from peek_platform import PeekPlatformConfig
+from peek_plugin_base.server.PeekPlatformAdminHttpHookABC import \
+    PeekPlatformAdminHttpHookABC
+from peek_plugin_base.server.PeekPlatformServerHttpHookABC import \
+    PeekPlatformServerHttpHookABC
 
 
 class PeekStoragePlatformHook(PeekStoragePlatformHookABC):

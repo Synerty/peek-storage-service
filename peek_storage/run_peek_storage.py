@@ -13,7 +13,6 @@ import logging
 import os
 
 from pytmpdir.Directory import DirSettings
-from txhttputil.site.FileUploadRequest import FileUploadRequest
 from vortex.DeferUtil import vortexLogFailure
 from vortex.VortexFactory import VortexFactory
 
@@ -40,27 +39,21 @@ def setupPlatform():
     PeekPlatformConfig.componentName = peekStorageName
 
     # Tell the platform classes about our instance of the pluginSwInstallManager
-    from peek_storage.server.sw_install.PluginSwInstallManager import \
+    from peek_storage.sw_install.PluginSwInstallManager import \
         PluginSwInstallManager
     PeekPlatformConfig.pluginSwInstallManager = PluginSwInstallManager()
 
     # Tell the platform classes about our instance of the PeekSwInstallManager
-    from peek_storage.server.sw_install.PeekSwInstallManager import PeekSwInstallManager
+    from peek_storage.sw_install.PeekSwInstallManager import PeekSwInstallManager
     PeekPlatformConfig.peekSwInstallManager = PeekSwInstallManager()
 
     # Tell the platform classes about our instance of the PeekLoaderBase
-    from peek_storage.plugin.ServerPluginLoader import ServerPluginLoader
-    PeekPlatformConfig.pluginLoader = ServerPluginLoader()
+    from peek_storage.plugin.StoragePluginLoader import StoragePluginLoader
+    PeekPlatformConfig.pluginLoader = StoragePluginLoader()
 
     # The config depends on the componentName, order is important
     from peek_storage.PeekStorageConfig import PeekStorageConfig
     PeekPlatformConfig.config = PeekStorageConfig()
-
-    # Initialise the recovery user
-    # noinspection PyStatementEffect
-    PeekPlatformConfig.config.adminUser
-    # noinspection PyStatementEffect
-    PeekPlatformConfig.config.adminPass
 
     # Update the version in the config file
     from peek_storage import __version__
@@ -82,44 +75,16 @@ def setupPlatform():
     # Set the reactor thread count
     reactor.suggestThreadPoolSize(PeekPlatformConfig.config.twistedThreadPoolSize)
 
-    # Setup TX Celery
-    from txcelery.defer import _DeferredTask
-    _DeferredTask.startCeleryThreads(PeekPlatformConfig.config.celeryConnectionPoolSize,
-                                     PeekPlatformConfig.config.celeryConnectionRecycleTime)
-
     # Set paths for the Directory object
     DirSettings.defaultDirChmod = PeekPlatformConfig.config.DEFAULT_DIR_CHMOD
     DirSettings.tmpDirPath = PeekPlatformConfig.config.tmpPath
-    FileUploadRequest.tmpFilePath = PeekPlatformConfig.config.tmpPath
-
-    # Configure the celery app
-    from peek_platform.ConfigCeleryApp import configureCeleryApp
-    from peek_plugin_base.worker.CeleryApp import celeryApp
-    configureCeleryApp(celeryApp, PeekPlatformConfig.config, forCaller=True)
 
 
 def startListening():
-    from peek_storage.backend.AdminSiteResource import setupAdminSite, adminSiteRoot
-    from peek_storage.backend.auth.AdminAuthChecker import AdminAuthChecker
-    from peek_storage.backend.auth.AdminAuthRealm import AdminAuthRealm
     from peek_platform import PeekPlatformConfig
 
-    setupAdminSite()
-
-    adminAuthChecker = AdminAuthChecker()
-    adminAuthRealm = AdminAuthRealm(adminSiteRoot, adminAuthChecker)
-
-    adminSiteCfg = PeekPlatformConfig.config.adminHttpServer
-    setupSite("Peek Admin",
-              adminAuthRealm,
-              portNum=adminSiteCfg.sitePort,
-              enableLogin=False,
-              redirectFromHttpPort=adminSiteCfg.redirectFromHttpPort,
-              sslCertFilePath=adminSiteCfg.sslCertFilePath,
-              sslKeyFilePath=adminSiteCfg.sslKeyFilePath)
-
-    from peek_storage.server.PlatformSiteResource import setupPlatformSite
-    from peek_storage.server.PlatformSiteResource import platformSiteRoot
+    from peek_storage.service.StorageSiteResource import setupPlatformSite
+    from peek_storage.service.StorageSiteResource import platformSiteRoot
 
     setupPlatformSite()
 

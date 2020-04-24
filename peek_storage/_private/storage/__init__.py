@@ -32,6 +32,4 @@ def setupDbConn(dbConnectString: str, metadata: MetaData, alembicDir: str,
                           enableForeignKeys=False)
 
 
-from . import PeekPluginInfo
 from . import Setting
-from . import PeekEnv

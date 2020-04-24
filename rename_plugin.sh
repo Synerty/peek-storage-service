@@ -36,8 +36,7 @@ function replace {
 }
 
 # RENAME THE PLUGIN
-replace "PeekServer"  "PeekStorage"
-replace "peekServer" "peekStorage"
+replace "ServerPlugin"  "StoragePlugin"
 
 # Remove compile generated javascript
 find ./ -type f -not -name '.git' -name "*.js" -exec rm {} \; || true

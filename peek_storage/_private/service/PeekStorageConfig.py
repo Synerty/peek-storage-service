@@ -15,8 +15,6 @@
 import logging
 
 from peek_platform.file_config.PeekFileConfigABC import PeekFileConfigABC
-from peek_platform.file_config.PeekFileConfigHttpServerMixin import \
-    PeekFileConfigHttpMixin
 from peek_platform.file_config.PeekFileConfigOsMixin import PeekFileConfigOsMixin
 from peek_platform.file_config.PeekFileConfigPlatformMixin import \
     PeekFileConfigPlatformMixin
@@ -36,5 +34,3 @@ class PeekStorageConfig(PeekFileConfigABC,
 
     def __init__(self):
         super().__init__()
-        self.adminHttpServer = PeekFileConfigHttpMixin(self, "admin", 8010)
-        self.platformHttpServer = PeekFileConfigHttpMixin(self, "platform", 8011)

@@ -1,6 +1,7 @@
 import logging
 from typing import Type, Tuple, List
 
+from peek_storage.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
 from twisted.internet.defer import inlineCallbacks
 
 from peek_platform.plugin.PluginLoaderABC import PluginLoaderABC
@@ -11,16 +12,15 @@ from peek_plugin_base.server.PluginServerStorageEntryHookABC import \
 from peek_plugin_base.server.PluginServerWorkerEntryHookABC import \
     PluginServerWorkerEntryHookABC
 from peek_storage.plugin.PeekStoragePlatformHook import PeekStoragePlatformHook
-from peek_storage.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
 
 logger = logging.getLogger(__name__)
 
 
-class ServerPluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
+class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
     _instance = None
 
     def __new__(cls, *args, **kwargs):
-        assert cls._instance is None, "ServerPluginLoader is a singleton, don't construct it"
+        assert cls._instance is None, "StoragePluginLoader is a singleton, don't construct it"
         cls._instance = PluginLoaderABC.__new__(cls, *args, **kwargs)
         return cls._instance
 
