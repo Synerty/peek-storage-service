@@ -1,7 +1,7 @@
 import logging
 from typing import Type, Tuple, List
 
-from peek_storage.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
+from peek_storage._private.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
 from twisted.internet.defer import inlineCallbacks
 
 from peek_platform.plugin.PluginLoaderABC import PluginLoaderABC
@@ -11,7 +11,7 @@ from peek_plugin_base.server.PluginServerStorageEntryHookABC import \
     PluginServerStorageEntryHookABC
 from peek_plugin_base.server.PluginServerWorkerEntryHookABC import \
     PluginServerWorkerEntryHookABC
-from peek_storage.plugin.PeekStoragePlatformHook import PeekStoragePlatformHook
+from peek_storage._private.plugin.PeekStoragePlatformHook import PeekStoragePlatformHook
 
 logger = logging.getLogger(__name__)
 
@@ -43,9 +43,6 @@ class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
     def loadOptionalPlugins(self):
         yield PluginLoaderABC.loadOptionalPlugins(self)
 
-        yield from self._buildAdminSite(self._loadedPlugins.values())
-        yield from self._buildAdminDocs(self._loadedPlugins.values())
-        yield from self._buildDevDocs(self._loadedPlugins.values())
 
     def unloadPlugin(self, pluginName: str):
         PluginLoaderABC.unloadPlugin(self, pluginName)
@@ -96,12 +93,5 @@ class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
 
         # Add all the resources required to serve the backend site
         # And all the plugin custom resources it may create
-
-        from peek_storage.backend.AdminSiteResource import adminSiteRoot as adminSiteRoot
-        adminSiteRoot.putChild(pluginName.encode(), platformApi.rootAdminResource)
-
-        from peek_storage.server.PlatformSiteResource import \
-            platformSiteRoot as platformRoot
-        platformRoot.putChild(pluginName.encode(), platformApi.rootServerResource)
 
         self._loadedPlugins[pluginName] = pluginMain

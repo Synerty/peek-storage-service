@@ -19,8 +19,8 @@ from vortex.VortexFactory import VortexFactory
 from peek_platform.util.LogUtil import setupPeekLogger
 from peek_plugin_base.PeekVortexUtil import peekStorageName
 from peek_storage import importPackages
-from peek_storage.storage import setupDbConn
-from peek_storage.storage.DeclarativeBase import metadata
+from peek_storage._private.storage import setupDbConn
+from peek_storage._private.storage.DeclarativeBase import metadata
 
 setupPeekLogger(peekStorageName)
 
@@ -39,20 +39,20 @@ def setupPlatform():
     PeekPlatformConfig.componentName = peekStorageName
 
     # Tell the platform classes about our instance of the pluginSwInstallManager
-    from peek_storage.sw_install.PluginSwInstallManager import \
+    from peek_storage._private.service.sw_install.PluginSwInstallManager import \
         PluginSwInstallManager
     PeekPlatformConfig.pluginSwInstallManager = PluginSwInstallManager()
 
     # Tell the platform classes about our instance of the PeekSwInstallManager
-    from peek_storage.sw_install.PeekSwInstallManager import PeekSwInstallManager
+    from peek_storage._private.service.sw_install.PeekSwInstallManager import PeekSwInstallManager
     PeekPlatformConfig.peekSwInstallManager = PeekSwInstallManager()
 
     # Tell the platform classes about our instance of the PeekLoaderBase
-    from peek_storage.plugin.StoragePluginLoader import StoragePluginLoader
+    from peek_storage._private.plugin.StoragePluginLoader import StoragePluginLoader
     PeekPlatformConfig.pluginLoader = StoragePluginLoader()
 
     # The config depends on the componentName, order is important
-    from peek_storage.PeekStorageConfig import PeekStorageConfig
+    from peek_storage._private.service.PeekStorageConfig import PeekStorageConfig
     PeekPlatformConfig.config = PeekStorageConfig()
 
     # Update the version in the config file
@@ -83,8 +83,8 @@ def setupPlatform():
 def startListening():
     from peek_platform import PeekPlatformConfig
 
-    from peek_storage.service.StorageSiteResource import setupPlatformSite
-    from peek_storage.service.StorageSiteResource import platformSiteRoot
+    from peek_storage._private.service.StorageSiteResource import setupPlatformSite
+    from peek_storage._private.service.StorageSiteResource import platformSiteRoot
 
     setupPlatformSite()
 
@@ -111,11 +111,11 @@ def main():
         metadata=metadata,
         dbEngineArgs=PeekPlatformConfig.config.dbEngineArgs,
         dbConnectString=PeekPlatformConfig.config.dbConnectString,
-        alembicDir=os.path.join(os.path.dirname(peek_storage.__file__), "alembic")
+        alembicDir=os.path.join(os.path.dirname(peek_storage._private.__file__), "alembic")
     )
 
     # Force model migration
-    from peek_storage.storage import dbConn
+    from peek_storage._private.storage import dbConn
     dbConn.migrate()
 
     # Import remaining components

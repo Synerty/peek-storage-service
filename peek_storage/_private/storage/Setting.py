@@ -19,7 +19,7 @@ from sqlalchemy.sql.schema import Index
 from sqlalchemy.types import Integer, String, Boolean
 from vortex.Tuple import Tuple, addTupleType
 
-from peek_storage.storage.DeclarativeBase import DeclarativeBase
+from peek_storage._private.storage.DeclarativeBase import DeclarativeBase
 
 __author__ = 'synerty'
 
@@ -221,7 +221,7 @@ class PropertyKey(object):
 
 
 def _getSetting(name, propertyDict, key=None, value=None):
-    from peek_storage.storage import dbConn
+    from peek_storage._private.storage import dbConn
     session = dbConn.ormSessionCreator()
     all = session.query(Setting).filter(Setting.name == name).all()
 

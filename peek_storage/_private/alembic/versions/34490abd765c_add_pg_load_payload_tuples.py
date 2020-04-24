@@ -20,7 +20,7 @@ import geoalchemy2
 def upgrade():
 
     sql = '''
-CREATE OR REPLACE FUNCTION public.load_paylaod_tuples(
+CREATE OR REPLACE FUNCTION peek_storage.load_paylaod_tuples(
 	sql_qry_ character varying,
 	payload_filt_ character varying,
 	loader_module_class_method_ character varying,
@@ -106,7 +106,7 @@ return json.dumps({
 
 $BODY$;
 
-ALTER FUNCTION public.load_paylaod_tuples(character varying, character varying, character varying, character varying, integer)
+ALTER FUNCTION peek_storage.load_paylaod_tuples(character varying, character varying, character varying, character varying, integer)
     OWNER TO peek;
 
 

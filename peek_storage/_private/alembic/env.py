@@ -9,7 +9,7 @@ config = context.config
 
 # setupPeekLogger(peekStorageName)
 
-from peek_storage.storage.DeclarativeBase import metadata
+from peek_storage._private.storage.DeclarativeBase import metadata
 target_metadata = metadata
 
 # other values from the config, defined by the needs of env.py,
