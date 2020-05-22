@@ -32,6 +32,7 @@ def runPyInPgBlocking(dbSessionCreator: DbSessionCreator,
         )
 
         resultJsonStr: str = next(session.execute(sqlFunc))[0]
+        session.commit()
 
         resultJson: Dict = ujson.loads(resultJsonStr)
         return resultJson["result"]
