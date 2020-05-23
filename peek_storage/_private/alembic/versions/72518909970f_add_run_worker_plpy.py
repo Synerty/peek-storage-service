@@ -42,15 +42,15 @@ pythonPath = json.loads(python_path)
 
 import sys
 
-if not GD.get('peek_sys_path_set'):
+if not SD.get('peek_sys_path_set'):
     sys.path.extend(pythonPath)
-    GD['peek_sys_path_set'] = True
+    SD['peek_sys_path_set'] = True
 
 # ---------------
 # Setup to use the virtual environment
 
-if GD.get('peek_config'):
-    config = GD['peek_config']
+if SD.get('peek_config'):
+    config = SD['peek_config']
 
 else:
     from peek_plugin_base.PeekVortexUtil import peekWorkerName
@@ -60,12 +60,12 @@ else:
     PeekPlatformConfig.componentName = peekWorkerName
 
     config = PeekWorkerConfig()
-    GD['peek_config'] = config
+    SD['peek_config'] = config
 
 # ---------------
 # Setup the workers logger
 
-if not GD.get('peek_logger_setup'):
+if not SD.get('peek_logger_setup'):
     import logging
     import os
     from peek_plugin_base.PeekVortexUtil import peekWorkerName
@@ -74,13 +74,13 @@ if not GD.get('peek_logger_setup'):
     logging.root.setLevel(config.loggingLevel)
 
     setupPeekLogger("%s-%s" % (peekWorkerName, os.getpid()))
-    GD['peek_logger_setup'] = True
+    SD['peek_logger_setup'] = True
 
 # ---------------
 # Initialise the DB Connections
 
-if GD.get('CeleryDbConn'):
-    CeleryDbConn = GD['CeleryDbConn']
+if SD.get('CeleryDbConn'):
+    CeleryDbConn = SD['CeleryDbConn']
 
 else:
     from peek_plugin_base.worker import CeleryDbConn
@@ -95,8 +95,8 @@ else:
 # ---------------
 # Dynamically load the tuple create method
 
-if GD.get(classMethodToRunStr):
-    moduleMethodToRun = GD[classMethodToRunStr]
+if SD.get(classMethodToRunStr):
+    moduleMethodToRun = SD[classMethodToRunStr]
 
 else:
     from importlib.util import find_spec, module_from_spec
@@ -119,20 +119,20 @@ else:
 # Load the arguments
 
 
-if GD.get('peek_ArgTuple'):
-    _RunPyInWorkerArgsTuple = GD['peek_ArgTuple']
-    _RunPyInWorkerResultTuple = GD['peek_ResultTuple']
-    json = GD['peek_json']
+if SD.get('peek_ArgTuple'):
+    _RunPyInWorkerArgsTuple = SD['peek_ArgTuple']
+    _RunPyInWorkerResultTuple = SD['peek_ResultTuple']
+    json = SD['peek_json']
 
 else:
     from peek_storage.plpython.RunWorkerTaskPyInPg \
         import _RunPyInWorkerArgsTuple, _RunPyInWorkerResultTuple
 
-    GD['peek_ArgTuple'] = _RunPyInWorkerArgsTuple
-    GD['peek_ResultTuple'] = _RunPyInWorkerResultTuple
+    SD['peek_ArgTuple'] = _RunPyInWorkerArgsTuple
+    SD['peek_ResultTuple'] = _RunPyInWorkerResultTuple
 
     import json
-    GD['peek_json'] = json
+    SD['peek_json'] = json
 
 argsTuple = _RunPyInWorkerArgsTuple().fromJsonDict(json.loads(argsJson))
 
