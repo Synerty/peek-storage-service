@@ -40,6 +40,13 @@ class StorageInit:
 
                 return
 
+            if 'extension "timescaledb" does not exist' in str(e):
+                logger.debug("Skipping timescale extension update as the extension"
+                             " doesn't exist yet")
+
+                return
+
+
             logger.error("Updating timescaledb extesion failed")
             logger.exception(e)
 
