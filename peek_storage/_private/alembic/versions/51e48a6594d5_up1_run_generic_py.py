@@ -27,6 +27,7 @@ DROP FUNCTION IF EXISTS
 CREATE OR REPLACE FUNCTION peek_storage.run_generic_python(
     args_tuple_json_str character varying,
     class_method_to_run_str_ character varying,
+    class_method_to_import_tuples_ character varying,
     python_path character varying)
     RETURNS character varying
     LANGUAGE 'plpython3u'
@@ -40,6 +41,7 @@ import json
 from base64 import b64decode
 argsTupleJsonStr = args_tuple_json_str
 classMethodToRunStr = class_method_to_run_str_
+classMethodToImportTuplesStr = class_method_to_import_tuples_
 pythonPath = json.loads(python_path)
 
 # ---------------
@@ -48,10 +50,30 @@ import sys
 
 sys.path.extend(pythonPath)
 
+from importlib.util import find_spec, module_from_spec
+
+# ---------------
+# Dynamically load the import tuple method
+
+if classMethodToImportTuplesStr and classMethodToImportTuplesStr != 'None':
+    modName, className, methodName = classMethodToImportTuplesStr.rsplit('.',2)
+
+    if modName in sys.modules:
+        package_ = sys.modules[modName]
+
+    else:
+        modSpec = find_spec(modName)
+        if not modSpec:
+             raise Exception("Failed to find package %s,"
+                             " is the python package installed?" % modName)
+        package_ = modSpec.loader.load_module()
+
+    Class_ = getattr(package_, className)
+    importTupleMethod = getattr(Class_, methodName)
+    importTupleMethod()
+
 # ---------------
 # Dynamically load the tuple create method
-
-from importlib.util import find_spec, module_from_spec
 
 modName, className, methodName = classMethodToRunStr.rsplit('.',2)
 
@@ -62,7 +84,7 @@ else:
     modSpec = find_spec(modName)
     if not modSpec:
          raise Exception("Failed to find package %s,"
-                           " is the python package installed?" % modName)
+                         " is the python package installed?" % modName)
     package_ = modSpec.loader.load_module()
 
 Class_ = getattr(package_, className)
@@ -88,6 +110,7 @@ return _RunPyInPgResultTuple(result=result)._toJson()
 $BODY$;
 
 ALTER FUNCTION peek_storage.run_generic_python(character varying,
+                                               character varying,
                                                character varying,
                                                character varying)
     OWNER TO peek;

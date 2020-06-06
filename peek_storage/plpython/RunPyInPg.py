@@ -1,5 +1,5 @@
 import sys
-from typing import Callable, Any
+from typing import Callable, Any, Optional
 
 import ujson
 from peek_plugin_base.storage.DbConnection import DbSessionCreator
@@ -24,22 +24,30 @@ class _RunPyInPgResultTuple(Tuple):
 
 def runPyInPgBlocking(dbSessionCreator: DbSessionCreator,
                       classMethodToRun: Callable,
+                      classMethodToImportTuples: Optional[Callable],
                       *args,
                       **kwargs) -> Any:
     # noinspection PyProtectedMember
     argTupleJson = _RunPyInPgArgTuple(args=args, kwargs=kwargs)._toJson()
 
-    loaderModuleClassMethodStr = '.'.join([
+    loaderModuleClassMethodToRunStr = '.'.join([
         classMethodToRun.__self__.__module__,
         classMethodToRun.__self__.__name__,
         classMethodToRun.__name__
     ])
 
+    loaderModuleClassMethodToImportStr = '.'.join([
+        classMethodToImportTuples.__self__.__module__,
+        classMethodToImportTuples.__self__.__name__,
+        classMethodToImportTuples.__name__
+    ]) if classMethodToImportTuples else 'None'
+
     session = dbSessionCreator()
     try:
         sqlFunc = func.peek_storage.run_generic_python(
             argTupleJson,
-            loaderModuleClassMethodStr,
+            loaderModuleClassMethodToRunStr,
+            loaderModuleClassMethodToImportStr,
             __sysPathsJson
         )
 
