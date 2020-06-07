@@ -1,7 +1,7 @@
 """add plpython3u
 
 Revision ID: 2efc91c0f0f6
-Revises: 
+Revises:
 Create Date: 2020-04-24 19:43:44.230799
 
 """
@@ -20,13 +20,13 @@ import geoalchemy2
 def upgrade():
 
     sql = '''
-        DROP LANGUAGE IF EXISTS plpython3u CASCADE;
-      
+        DROP EXTENSION IF EXISTS plpython3u CASCADE;
+
         CREATE PROCEDURAL LANGUAGE plpython3u
             HANDLER plpython3_call_handler
             INLINE plpython3_inline_handler
             VALIDATOR plpython3_validator;
-        
+
         ALTER LANGUAGE plpython3u
             OWNER TO peek;
           '''
