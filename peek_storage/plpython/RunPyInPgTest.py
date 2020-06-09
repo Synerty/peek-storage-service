@@ -24,6 +24,7 @@ class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
     def test_args(self):
         result = runPyInPgBlocking(self._dbConn.ormSessionCreator,
                                    self._pg_args,
+                                   None,
                                    ['SUC', 'CESS'])
 
         self.assertEqual(result, "SUCCESS")
@@ -36,6 +37,7 @@ class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
     def test_kwwargs(self):
         result = runPyInPgBlocking(self._dbConn.ormSessionCreator,
                                    self._pg_kwargs,
+                                   None,
                                    suc='SUC',
                                    cess='CESS KW')
 
