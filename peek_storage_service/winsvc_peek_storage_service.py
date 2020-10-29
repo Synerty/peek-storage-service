@@ -4,14 +4,14 @@ import win32service
 import win32serviceutil
 from twisted.internet import reactor
 
-import peek_storage
+import peek_storage_service
 from peek_platform.sw_install.PeekSwInstallManagerABC import IS_WIN_SVC
 
 logger = logging.getLogger(__name__)
 
 class PeekSvc(win32serviceutil.ServiceFramework):
-    _svc_name_ = "peek-storage"
-    _svc_display_name_ = "Peek Server " + peek_storage.__version__
+    _svc_name_ = "peek-storage-service"
+    _svc_display_name_ = "Peek Server " + peek_storage_service.__version__
     _exe_args_ = IS_WIN_SVC
     _svc_deps_ = ["RpcSs", "postgresql-x64-10", "Redis", "RabbitMQ"]
 
@@ -36,8 +36,8 @@ class PeekSvc(win32serviceutil.ServiceFramework):
 
             reactor.callLater(1, self._notifyOfStart)
 
-            from peek_storage import run_peek_storage
-            run_peek_storage.main()
+            from peek_storage_service import run_peek_storage_service
+            run_peek_storage_service.main()
 
         except Exception as e:
             logger.exception(e)

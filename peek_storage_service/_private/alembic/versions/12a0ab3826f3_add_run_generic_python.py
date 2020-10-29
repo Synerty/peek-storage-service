@@ -17,7 +17,7 @@ from alembic import op
 
 def upgrade():
     sql = '''
-CREATE OR REPLACE FUNCTION peek_storage.run_generic_python(
+CREATE OR REPLACE FUNCTION peek_storage_service.run_generic_python(
     args_json character varying,
     kwargs_json character varying,
     class_method_to_run_str_ character varying,
@@ -71,7 +71,7 @@ return json.dumps({
 
 $BODY$;
 
-ALTER FUNCTION peek_storage.run_generic_python(character varying, character varying, character varying, character varying)
+ALTER FUNCTION peek_storage_service.run_generic_python(character varying, character varying, character varying, character varying)
     OWNER TO peek;
 
 
@@ -80,7 +80,7 @@ ALTER FUNCTION peek_storage.run_generic_python(character varying, character vary
 
 
 def downgrade():
-    sql = '''DROP FUNCTION peek_storage.run_generic_python(character varying, 
+    sql = '''DROP FUNCTION peek_storage_service.run_generic_python(character varying, 
                                                             character varying, 
                                                             character varying, 
                                                             character varying);'''

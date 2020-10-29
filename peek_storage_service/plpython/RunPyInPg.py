@@ -11,14 +11,14 @@ __sysPathsJson = ujson.dumps(sys.path)
 
 @addTupleType
 class _RunPyInPgArgTuple(Tuple):
-    __tupleType__ = 'peek_storage._RunPyInPgArgTuple'
+    __tupleType__ = 'peek_storage_service._RunPyInPgArgTuple'
     args = TupleField()
     kwargs = TupleField()
 
 
 @addTupleType
 class _RunPyInPgResultTuple(Tuple):
-    __tupleType__ = 'peek_storage._RunPyInPgResultTuple'
+    __tupleType__ = 'peek_storage_service._RunPyInPgResultTuple'
     result = TupleField()
 
 
@@ -44,7 +44,7 @@ def runPyInPgBlocking(dbSessionCreator: DbSessionCreator,
 
     session = dbSessionCreator()
     try:
-        sqlFunc = func.peek_storage.run_generic_python(
+        sqlFunc = func.peek_storage_service.run_generic_python(
             argTupleJson,
             loaderModuleClassMethodToRunStr,
             loaderModuleClassMethodToImportStr,

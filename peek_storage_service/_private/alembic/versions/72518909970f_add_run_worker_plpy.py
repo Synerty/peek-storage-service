@@ -17,7 +17,7 @@ from alembic import op
 
 def upgrade():
     sql = '''
-CREATE OR REPLACE FUNCTION peek_storage.run_worker_task_python(
+CREATE OR REPLACE FUNCTION peek_storage_service.run_worker_task_python(
     sqla_url character varying,
     args_json character varying,
     class_method_to_run_str_ character varying,
@@ -54,7 +54,7 @@ if SD.get('peek_config'):
 
 else:
     from peek_plugin_base.PeekVortexUtil import peekWorkerName
-    from peek_worker.PeekWorkerConfig import PeekWorkerConfig
+    from peek_worker_service.PeekWorkerConfig import PeekWorkerConfig
 
     from peek_platform import PeekPlatformConfig
     PeekPlatformConfig.componentName = peekWorkerName
@@ -125,7 +125,7 @@ if SD.get('peek_ArgTuple'):
     json = SD['peek_json']
 
 else:
-    from peek_storage.plpython.RunWorkerTaskPyInPg \
+    from peek_storage_service.plpython.RunWorkerTaskPyInPg \
         import _RunPyInWorkerArgsTuple, _RunPyInWorkerResultTuple
 
     SD['peek_ArgTuple'] = _RunPyInWorkerArgsTuple
@@ -145,7 +145,7 @@ return json.dumps(_RunPyInWorkerResultTuple(result=result).toJsonDict())
 
 $BODY$;
 
-ALTER FUNCTION peek_storage.run_worker_task_python(character varying, character varying,
+ALTER FUNCTION peek_storage_service.run_worker_task_python(character varying, character varying,
                                                    character varying, character varying)
     OWNER TO peek;
 
@@ -155,7 +155,7 @@ ALTER FUNCTION peek_storage.run_worker_task_python(character varying, character 
 
 
 def downgrade():
-    sql = '''DROP FUNCTION peek_storage.run_worker_task_python(character varying,
+    sql = '''DROP FUNCTION peek_storage_service.run_worker_task_python(character varying,
                                                                character varying,
                                                                character varying,
                                                                character varying);'''

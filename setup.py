@@ -2,8 +2,8 @@ import os
 import shutil
 from setuptools import setup
 
-pip_package_name = "peek-storage"
-py_package_name = "peek_storage"
+pip_package_name = "peek-storage-service"
+py_package_name = "peek_storage_service"
 
 package_version = '0.0.0'
 
@@ -44,12 +44,12 @@ setup(
     package_data={'': package_files},
     entry_points={
         'console_scripts': [
-            'run_peek_storage = peek_storage.run_peek_storage:main',
-            'run_peek_storage_build_only = peek_storage.run_peek_storage_build_only:main',
-            'winsvc_peek_storage = peek_storage.winsvc_peek_storage:main',
+            'run_peek_storage_service = peek_storage_service.run_peek_storage_service:main',
+            'run_peek_storage_service_build_only = peek_storage_service.run_peek_storage_service_build_only:main',
+            'winsvc_peek_storage_service = peek_storage_service.winsvc_peek_storage_service:main',
         ],
     },
-    install_requires=["peek-platform", "peek-admin", "peek-doc-admin"],
+    install_requires=["peek-platform", "peek-admin-app", "peek-doc-admin"],
     zip_safe=False,version=package_version,
     description='Peek Platform - Server Service',
     author='Synerty',

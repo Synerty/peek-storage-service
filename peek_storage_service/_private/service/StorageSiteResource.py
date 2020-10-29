@@ -1,8 +1,8 @@
 from txhttputil.site.BasicResource import BasicResource
 
-from peek_storage._private.service.sw_download.PeekSwDownloadResource import \
+from peek_storage_service._private.service.sw_download.PeekSwDownloadResource import \
     PeekSwUpdateDownloadResource
-from peek_storage._private.service.sw_download.PluginSwDownloadResource import \
+from peek_storage_service._private.service.sw_download.PluginSwDownloadResource import \
     PluginSwDownloadResource
 
 platformSiteRoot = BasicResource()

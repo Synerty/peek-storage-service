@@ -32,7 +32,7 @@ def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
 
     session = dbSessionCreator()
     try:
-        sqlFunc = func.peek_storage.load_paylaod_tuples(
+        sqlFunc = func.peek_storage_service.load_paylaod_tuples(
             sqlStr,
             payloadFileJson,
             loaderModuleClassMethodStr,

@@ -19,12 +19,12 @@ def upgrade():
     sql = '''
 
 DROP FUNCTION IF EXISTS
-              peek_storage.run_generic_python(character varying,
+              peek_storage_service.run_generic_python(character varying,
                                               character varying,
                                               character varying,
                                               character varying);
 
-CREATE OR REPLACE FUNCTION peek_storage.run_generic_python(
+CREATE OR REPLACE FUNCTION peek_storage_service.run_generic_python(
     args_tuple_json_str character varying,
     class_method_to_run_str_ character varying,
     class_method_to_import_tuples_ character varying,
@@ -93,7 +93,7 @@ classMethodToRun = getattr(Class_, methodName)
 # ---------------
 # Load the arguments
 
-from peek_storage.plpython.RunPyInPg import _RunPyInPgResultTuple, _RunPyInPgArgTuple
+from peek_storage_service.plpython.RunPyInPg import _RunPyInPgResultTuple, _RunPyInPgArgTuple
 
 argsTuple = _RunPyInPgArgTuple()._fromJson(argsTupleJsonStr)
 
@@ -109,7 +109,7 @@ return _RunPyInPgResultTuple(result=result)._toJson()
 
 $BODY$;
 
-ALTER FUNCTION peek_storage.run_generic_python(character varying,
+ALTER FUNCTION peek_storage_service.run_generic_python(character varying,
                                                character varying,
                                                character varying,
                                                character varying)

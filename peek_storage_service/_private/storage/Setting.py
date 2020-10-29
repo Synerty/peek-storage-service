@@ -19,7 +19,7 @@ from sqlalchemy.sql.schema import Index
 from sqlalchemy.types import Integer, String, Boolean
 from vortex.Tuple import Tuple, addTupleType
 
-from peek_storage._private.storage.DeclarativeBase import DeclarativeBase
+from peek_storage_service._private.storage.DeclarativeBase import DeclarativeBase
 
 __author__ = 'synerty'
 
@@ -138,7 +138,7 @@ class SettingProperty(PolymorphicVerticalProperty, Tuple, DeclarativeBase):
     """A setting property."""
 
     __tablename__ = 'SettingProperty'
-    __tupleType__ = 'peek_storage.setting.property'
+    __tupleType__ = 'peek_storage_service.setting.property'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     settingId = Column(ForeignKey('Setting.id'), primary_key=True, nullable=False)
@@ -165,7 +165,7 @@ class Setting(ProxiedDictMixin, Tuple, DeclarativeBase):
     """an Animal"""
 
     __tablename__ = 'Setting'
-    __tupleType__ = 'peek_storage.setting'
+    __tupleType__ = 'peek_storage_service.setting'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
@@ -221,7 +221,7 @@ class PropertyKey(object):
 
 
 def _getSetting(name, propertyDict, key=None, value=None):
-    from peek_storage._private.storage import dbConn
+    from peek_storage_service._private.storage import dbConn
     session = dbConn.ormSessionCreator()
     all = session.query(Setting).filter(Setting.name == name).all()
 

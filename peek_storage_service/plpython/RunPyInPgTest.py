@@ -2,8 +2,8 @@ import logging
 import unittest
 from typing import List
 
-from peek_storage._private.test.StorageTestMixin import StorageTestMixin
-from peek_storage.plpython.RunPyInPg import runPyInPgBlocking
+from peek_storage_service._private.test.StorageTestMixin import StorageTestMixin
+from peek_storage_service.plpython.RunPyInPg import runPyInPgBlocking
 
 logger = logging.getLogger(__name__)
 

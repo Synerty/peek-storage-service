@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PY_PACKAGE="peek_storage"
+PY_PACKAGE="peek_storage_service"
 PYPI_PUBLISH="1"
 
 

@@ -12,7 +12,7 @@
 import logging
 import os
 
-# from peek_server.storage.PeekPluginInfo import PeekPluginInfo
+# from peek_logic_service.storage.PeekPluginInfo import PeekPluginInfo
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
 from twisted.web.server import NOT_DONE_YET
@@ -45,7 +45,7 @@ class PluginSwDownloadResource(BasicResource):
         logger.debug("Plugin Download Resource GET, name=%s, version=%s",
                      name, version)
 
-        from peek_server.storage import dbConn
+        from peek_logic_service.storage import dbConn
         session = dbConn.ormSession
         qry = session.query(PeekPluginInfo).filter(PeekPluginInfo.name == name)
 

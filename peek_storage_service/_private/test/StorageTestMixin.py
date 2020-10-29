@@ -11,11 +11,11 @@ class StorageTestMixin:
         self._dbConn = None
 
     def setUp(self) -> None:
-        from peek_storage._private.storage import setupDbConn
-        from peek_storage._private.storage.DeclarativeBase import metadata
-        import peek_storage
+        from peek_storage_service._private.storage import setupDbConn
+        from peek_storage_service._private.storage.DeclarativeBase import metadata
+        import peek_storage_service
         from peek_plugin_base.storage.DbConnection import DbConnection
-        from peek_storage._private.service.PeekStorageConfig import PeekStorageConfig
+        from peek_storage_service._private.service.PeekStorageConfig import PeekStorageConfig
 
         from peek_platform import PeekPlatformConfig
         PeekPlatformConfig.componentName = peekStorageName
@@ -23,7 +23,7 @@ class StorageTestMixin:
         config = PeekStorageConfig()
 
         alembicDir = os.path.join(
-            os.path.dirname(peek_storage._private.__file__),
+            os.path.dirname(peek_storage_service._private.__file__),
             "alembic")
         self._dbConn = DbConnection(dbConnectString=config.dbConnectString,
                                     metadata=metadata,

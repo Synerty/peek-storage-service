@@ -1,7 +1,7 @@
 import logging
 from typing import Type, Tuple, List
 
-from peek_storage._private.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
+from peek_storage_service._private.plugin.ServerFrontendLoadersMixin import ServerFrontendLoadersMixin
 from twisted.internet.defer import inlineCallbacks
 
 from peek_platform.plugin.PluginLoaderABC import PluginLoaderABC
@@ -11,7 +11,7 @@ from peek_plugin_base.server.PluginServerStorageEntryHookABC import \
     PluginServerStorageEntryHookABC
 from peek_plugin_base.server.PluginServerWorkerEntryHookABC import \
     PluginServerWorkerEntryHookABC
-from peek_storage._private.plugin.PeekStoragePlatformHook import PeekStoragePlatformHook
+from peek_storage_service._private.plugin.PeekStoragePlatformHook import PeekStoragePlatformHook
 
 logger = logging.getLogger(__name__)
 
