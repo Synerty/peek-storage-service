@@ -6,7 +6,7 @@ from twisted.internet.defer import inlineCallbacks
 
 from peek_platform.plugin.PluginLoaderABC import PluginLoaderABC
 from peek_plugin_base.PluginCommonEntryHookABC import PluginCommonEntryHookABC
-from peek_plugin_base.server.PluginServerEntryHookABC import PluginServerEntryHookABC
+from peek_plugin_base.server.PluginLogicEntryHookABC import PluginLogicEntryHookABC
 from peek_plugin_base.server.PluginServerStorageEntryHookABC import \
     PluginServerStorageEntryHookABC
 from peek_plugin_base.server.PluginServerWorkerEntryHookABC import \
@@ -33,11 +33,11 @@ class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
 
     @property
     def _entryHookClassType(self):
-        return PluginServerEntryHookABC
+        return PluginLogicEntryHookABC
 
     @property
     def _platformServiceNames(self) -> List[str]:
-        return ["server", "storage"]
+        return ["logic", "storage"]
 
     @inlineCallbacks
     def loadOptionalPlugins(self):
@@ -68,7 +68,7 @@ class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
                 and "worker" in requiresService:
             raise Exception("Plugin %s requires 'worker' service."
                             " It must now inherit PluginServerWorkerEntryHookABC"
-                            " in its PluginServerEntryHook implementation")
+                            " in its PluginLogicEntryHook implementation")
 
         if isinstance(pluginMain, PluginServerStorageEntryHookABC):
 
@@ -89,7 +89,7 @@ class StoragePluginLoader(PluginLoaderABC, ServerFrontendLoadersMixin):
         elif "storage" in requiresService:
             raise Exception("Plugin %s requires 'storage' service."
                             " It must now inherit PluginServerStorageEntryHookMixin"
-                            " in its PluginServerEntryHook implementation")
+                            " in its PluginLogicEntryHook implementation")
 
         # Add all the resources required to serve the backend site
         # And all the plugin custom resources it may create
