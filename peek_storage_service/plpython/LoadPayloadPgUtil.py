@@ -9,7 +9,7 @@ from sqlalchemy.sql import Select
 
 from peek_plugin_base.storage.DbConnection import DbSessionCreator
 
-LoadPayloadTupleResult = namedtuple("LoadPayloadTupleResult", ['count', 'encodedPayload'])
+_LoadPayloadTupleResult = namedtuple("LoadPayloadTupleResult", ['count', 'encodedPayload'])
 
 __sysPathsJson = ujson.dumps(sys.path)
 
@@ -18,7 +18,7 @@ def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
                                     sql: Select,
                                     sqlCoreLoadTupleClassmethod: Callable,
                                     payloadFilt: Optional[Dict] = None,
-                                    fetchSize=50) -> LoadPayloadTupleResult:
+                                    fetchSize=50) -> _LoadPayloadTupleResult:
     payloadFileJson = ujson.dumps(payloadFilt if payloadFilt else {})
 
     sqlStr = str(sql.compile(dialect=postgresql.dialect(),
