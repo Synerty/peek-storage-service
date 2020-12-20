@@ -46,7 +46,7 @@ def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
         if resultJson["encodedPayload"]:
             resultJson["encodedPayload"] = resultJson["encodedPayload"].encode()
 
-        return LoadPayloadTupleResult(**resultJson)
+        return _LoadPayloadTupleResult(**resultJson)
 
     finally:
         session.close()
