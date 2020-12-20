@@ -9,7 +9,7 @@ from sqlalchemy.sql import Select
 
 from peek_plugin_base.storage.DbConnection import DbSessionCreator
 
-_LoadPayloadTupleResult = namedtuple("LoadPayloadTupleResult", ['count', 'encodedPayload'])
+_LoadPayloadTupleResult = namedtuple("_LoadPayloadTupleResult", ['count', 'encodedPayload'])
 
 __sysPathsJson = ujson.dumps(sys.path)
 
