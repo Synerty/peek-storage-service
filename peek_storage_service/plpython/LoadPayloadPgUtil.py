@@ -2,7 +2,7 @@ import sys
 from collections import namedtuple
 from typing import Callable, Dict, Optional
 
-import ujson
+import json
 from sqlalchemy import func
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.sql import Select
@@ -11,7 +11,7 @@ from peek_plugin_base.storage.DbConnection import DbSessionCreator
 
 _LoadPayloadTupleResult = namedtuple("_LoadPayloadTupleResult", ['count', 'encodedPayload'])
 
-__sysPathsJson = ujson.dumps(sys.path)
+__sysPathsJson = json.dumps(sys.path)
 
 
 def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
@@ -19,7 +19,7 @@ def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
                                     sqlCoreLoadTupleClassmethod: Callable,
                                     payloadFilt: Optional[Dict] = None,
                                     fetchSize=50) -> _LoadPayloadTupleResult:
-    payloadFileJson = ujson.dumps(payloadFilt if payloadFilt else {})
+    payloadFileJson = json.dumps(payloadFilt if payloadFilt else {})
 
     sqlStr = str(sql.compile(dialect=postgresql.dialect(),
                              compile_kwargs={"literal_binds": True}))
@@ -42,7 +42,7 @@ def callPGLoadPayloadTuplesBlocking(dbSessionCreator: DbSessionCreator,
 
         resultJsonStr: str = next(session.execute(sqlFunc))[0]
 
-        resultJson: Dict = ujson.loads(resultJsonStr)
+        resultJson: Dict = json.loads(resultJsonStr)
         if resultJson["encodedPayload"]:
             resultJson["encodedPayload"] = resultJson["encodedPayload"].encode()
 
