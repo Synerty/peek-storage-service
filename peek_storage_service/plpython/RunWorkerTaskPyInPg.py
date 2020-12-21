@@ -2,13 +2,13 @@ import json
 import sys
 from typing import Callable, Any
 
-import ujson
+import json
 from sqlalchemy import func
 from vortex.Tuple import Tuple, addTupleType
 
 from peek_plugin_base.storage.DbConnection import DbSessionCreator
 
-__sysPathsJson = ujson.dumps(sys.path)
+__sysPathsJson = json.dumps(sys.path)
 
 
 @addTupleType
@@ -45,7 +45,7 @@ def runPyWorkerTaskInPgBlocking(dbSessionCreator: DbSessionCreator,
         session.commit()
 
         resultTuple = _RunPyInWorkerResultTuple() \
-            .fromJsonDict(ujson.loads(resultJsonStr))
+            .fromJsonDict(json.loads(resultJsonStr))
 
         return resultTuple.result
 

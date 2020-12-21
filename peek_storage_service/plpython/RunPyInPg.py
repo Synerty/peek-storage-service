@@ -1,12 +1,12 @@
 import sys
 from typing import Callable, Any, Optional
 
-import ujson
+import json
 from peek_plugin_base.storage.DbConnection import DbSessionCreator
 from sqlalchemy import func
 from vortex.Tuple import addTupleType, TupleField, Tuple
 
-__sysPathsJson = ujson.dumps(sys.path)
+__sysPathsJson = json.dumps(sys.path)
 
 
 @addTupleType
