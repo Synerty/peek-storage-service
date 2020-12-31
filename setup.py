@@ -64,9 +64,7 @@ package_files = find_package_files()
 
 requirements = [
     "peek-plugin-base",
-    "peek-platform",
-    "peek-admin-app",
-    "peek-doc-admin"
+    "peek-platform"
 ]
 
 # Force the dependencies to be the same branch
