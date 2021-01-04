@@ -7,8 +7,8 @@ Create Date: 2020-05-17 16:07:17.377521
 """
 
 # revision identifiers, used by Alembic.
-revision = 'bab14faf0cd7'
-down_revision = '12a0ab3826f3'
+revision = "bab14faf0cd7"
+down_revision = "12a0ab3826f3"
 branch_labels = None
 depends_on = None
 
@@ -19,7 +19,7 @@ import geoalchemy2
 
 def upgrade():
     # Extend the database with TimescaleDB
-    op.execute('CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE')
+    op.execute("CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE")
 
 
 def downgrade():

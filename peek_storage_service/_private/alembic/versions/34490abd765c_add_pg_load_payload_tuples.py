@@ -7,8 +7,8 @@ Create Date: 2020-04-24 19:47:40.784157
 """
 
 # revision identifiers, used by Alembic.
-revision = '34490abd765c'
-down_revision = '2efc91c0f0f6'
+revision = "34490abd765c"
+down_revision = "2efc91c0f0f6"
 branch_labels = None
 depends_on = None
 
@@ -18,8 +18,7 @@ import geoalchemy2
 
 
 def upgrade():
-
-    sql = '''
+    sql = """
 CREATE OR REPLACE FUNCTION peek_storage_service.load_paylaod_tuples(
 	sql_qry_ character varying,
 	payload_filt_ character varying,
@@ -110,7 +109,7 @@ ALTER FUNCTION peek_storage_service.load_paylaod_tuples(character varying, chara
     OWNER TO peek;
 
 
-          '''
+          """
     op.execute(sql)
 
 

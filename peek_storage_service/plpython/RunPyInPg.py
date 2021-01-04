@@ -11,36 +11,46 @@ __sysPathsJson = json.dumps(sys.path)
 
 @addTupleType
 class _RunPyInPgArgTuple(Tuple):
-    __tupleType__ = 'peek_storage_service._RunPyInPgArgTuple'
+    __tupleType__ = "peek_storage_service._RunPyInPgArgTuple"
     args = TupleField()
     kwargs = TupleField()
 
 
 @addTupleType
 class _RunPyInPgResultTuple(Tuple):
-    __tupleType__ = 'peek_storage_service._RunPyInPgResultTuple'
+    __tupleType__ = "peek_storage_service._RunPyInPgResultTuple"
     result = TupleField()
 
 
-def runPyInPgBlocking(dbSessionCreator: DbSessionCreator,
-                      classMethodToRun: Callable,
-                      classMethodToImportTuples: Optional[Callable],
-                      *args,
-                      **kwargs) -> Any:
+def runPyInPgBlocking(
+    dbSessionCreator: DbSessionCreator,
+    classMethodToRun: Callable,
+    classMethodToImportTuples: Optional[Callable],
+    *args,
+    **kwargs
+) -> Any:
     # noinspection PyProtectedMember
     argTupleJson = _RunPyInPgArgTuple(args=args, kwargs=kwargs)._toJson()
 
-    loaderModuleClassMethodToRunStr = '.'.join([
-        classMethodToRun.__self__.__module__,
-        classMethodToRun.__self__.__name__,
-        classMethodToRun.__name__
-    ])
+    loaderModuleClassMethodToRunStr = ".".join(
+        [
+            classMethodToRun.__self__.__module__,
+            classMethodToRun.__self__.__name__,
+            classMethodToRun.__name__,
+        ]
+    )
 
-    loaderModuleClassMethodToImportStr = '.'.join([
-        classMethodToImportTuples.__self__.__module__,
-        classMethodToImportTuples.__self__.__name__,
-        classMethodToImportTuples.__name__
-    ]) if classMethodToImportTuples else 'None'
+    loaderModuleClassMethodToImportStr = (
+        ".".join(
+            [
+                classMethodToImportTuples.__self__.__module__,
+                classMethodToImportTuples.__self__.__name__,
+                classMethodToImportTuples.__name__,
+            ]
+        )
+        if classMethodToImportTuples
+        else "None"
+    )
 
     session = dbSessionCreator()
     try:
@@ -48,7 +58,7 @@ def runPyInPgBlocking(dbSessionCreator: DbSessionCreator,
             argTupleJson,
             loaderModuleClassMethodToRunStr,
             loaderModuleClassMethodToImportStr,
-            __sysPathsJson
+            __sysPathsJson,
         )
 
         resultJsonStr: str = next(session.execute(sqlFunc))[0]

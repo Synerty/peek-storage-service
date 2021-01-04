@@ -1,4 +1,4 @@
-'''
+"""
  *
  *  Copyright Synerty Pty Ltd 2013
  *
@@ -11,23 +11,27 @@
  * Website : http://www.synerty.com
  * Support : support@synerty.com
  *
-'''
+"""
 import logging
 
 from peek_platform.file_config.PeekFileConfigABC import PeekFileConfigABC
 from peek_platform.file_config.PeekFileConfigOsMixin import PeekFileConfigOsMixin
-from peek_platform.file_config.PeekFileConfigPlatformMixin import \
-    PeekFileConfigPlatformMixin
-from peek_platform.file_config.PeekFileConfigSqlAlchemyMixin import \
-    PeekFileConfigSqlAlchemyMixin
+from peek_platform.file_config.PeekFileConfigPlatformMixin import (
+    PeekFileConfigPlatformMixin,
+)
+from peek_platform.file_config.PeekFileConfigSqlAlchemyMixin import (
+    PeekFileConfigSqlAlchemyMixin,
+)
 
 logger = logging.getLogger(__name__)
 
 
-class PeekStorageConfig(PeekFileConfigABC,
-                        PeekFileConfigOsMixin,
-                        PeekFileConfigPlatformMixin,
-                        PeekFileConfigSqlAlchemyMixin):
+class PeekStorageConfig(
+    PeekFileConfigABC,
+    PeekFileConfigOsMixin,
+    PeekFileConfigPlatformMixin,
+    PeekFileConfigSqlAlchemyMixin,
+):
     """
     This class creates a server configuration
     """

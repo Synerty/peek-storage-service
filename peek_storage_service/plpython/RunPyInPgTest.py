@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
-    def __init__(self, methodName='runTest'):
+    def __init__(self, methodName="runTest"):
         unittest.TestCase.__init__(self, methodName)
 
         self._dbConn = None
@@ -22,24 +22,25 @@ class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
 
     # -------------------------------------------------------------------------
     def test_args(self):
-        result = runPyInPgBlocking(self._dbConn.ormSessionCreator,
-                                   self._pg_args,
-                                   None,
-                                   ['SUC', 'CESS'])
+        result = runPyInPgBlocking(
+            self._dbConn.ormSessionCreator, self._pg_args, None, ["SUC", "CESS"]
+        )
 
         self.assertEqual(result, "SUCCESS")
 
     @classmethod
     def _pg_args(cls, plpy, successes: List[str]):
-        return ''.join(successes)
+        return "".join(successes)
 
     # -------------------------------------------------------------------------
     def test_kwwargs(self):
-        result = runPyInPgBlocking(self._dbConn.ormSessionCreator,
-                                   self._pg_kwargs,
-                                   None,
-                                   suc='SUC',
-                                   cess='CESS KW')
+        result = runPyInPgBlocking(
+            self._dbConn.ormSessionCreator,
+            self._pg_kwargs,
+            None,
+            suc="SUC",
+            cess="CESS KW",
+        )
 
         self.assertEqual(result, "SUCCESS KW")
 
@@ -49,8 +50,7 @@ class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
 
     # -------------------------------------------------------------------------
     def test_pypg(self):
-        result = runPyInPgBlocking(self._dbConn.ormSessionCreator,
-                                   self._pg_plpy)
+        result = runPyInPgBlocking(self._dbConn.ormSessionCreator, self._pg_plpy)
 
         self.assertEqual(result, "plpy exists")
 
@@ -59,4 +59,5 @@ class RunPyInPgTestCase(unittest.TestCase, StorageTestMixin):
         assert plpy, "pypg is not defined"
 
         return "plpy exists"
+
     # -------------------------------------------------------------------------

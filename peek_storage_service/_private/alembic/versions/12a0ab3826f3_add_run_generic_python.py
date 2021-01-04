@@ -7,8 +7,8 @@ Create Date: 2020-04-25 15:28:50.279318
 """
 
 # revision identifiers, used by Alembic.
-revision = '12a0ab3826f3'
-down_revision = '34490abd765c'
+revision = "12a0ab3826f3"
+down_revision = "34490abd765c"
 branch_labels = None
 depends_on = None
 
@@ -16,7 +16,7 @@ from alembic import op
 
 
 def upgrade():
-    sql = '''
+    sql = """
 CREATE OR REPLACE FUNCTION peek_storage_service.run_generic_python(
     args_json character varying,
     kwargs_json character varying,
@@ -75,13 +75,13 @@ ALTER FUNCTION peek_storage_service.run_generic_python(character varying, charac
     OWNER TO peek;
 
 
-          '''
+          """
     op.execute(sql)
 
 
 def downgrade():
-    sql = '''DROP FUNCTION peek_storage_service.run_generic_python(character varying, 
+    sql = """DROP FUNCTION peek_storage_service.run_generic_python(character varying, 
                                                             character varying, 
                                                             character varying, 
-                                                            character varying);'''
+                                                            character varying);"""
     op.execute(sql)

@@ -1,11 +1,10 @@
 from peek_platform import PeekPlatformConfig
 from peek_platform.sw_install.PeekSwInstallManagerABC import PeekSwInstallManagerABC
 
-__author__ = 'synerty'
+__author__ = "synerty"
 
 
 class PeekSwInstallManager(PeekSwInstallManagerABC):
-
     def _stopCode(self):
         PeekPlatformConfig.pluginLoader.stopOptionalPlugins()
         PeekPlatformConfig.pluginLoader.stopCorePlugins()
@@ -21,6 +20,3 @@ class PeekSwInstallManager(PeekSwInstallManagerABC):
 
         PeekPlatformConfig.pluginLoader.startCorePlugins()
         PeekPlatformConfig.pluginLoader.startOptionalPlugins()
-
-
-

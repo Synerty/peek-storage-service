@@ -29,23 +29,25 @@ class StorageInit:
             while len(rawConn.notices) < 2:
                 sleep(2.0)
 
-
             else:
-                logger.debug(rawConn.notices[1].replace('\n', ', '))
+                logger.debug(rawConn.notices[1].replace("\n", ", "))
 
         except Exception as e:
-            if 'Start a new session' in str(e):
-                logger.debug("Skipping timescale extension update as the extension is"
-                             " already loaded")
+            if "Start a new session" in str(e):
+                logger.debug(
+                    "Skipping timescale extension update as the extension is"
+                    " already loaded"
+                )
 
                 return
 
             if 'extension "timescaledb" does not exist' in str(e):
-                logger.debug("Skipping timescale extension update as the extension"
-                             " doesn't exist yet")
+                logger.debug(
+                    "Skipping timescale extension update as the extension"
+                    " doesn't exist yet"
+                )
 
                 return
-
 
             logger.error("Updating timescaledb extesion failed")
             logger.exception(e)

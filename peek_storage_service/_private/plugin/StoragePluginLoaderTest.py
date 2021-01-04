@@ -14,6 +14,7 @@ class StoragePluginLoaderTest(unittest.TestCase):
     def setUp(self):
 
         from .StoragePluginLoader import StoragePluginLoader
+
         self.serverPluginLoader = StoragePluginLoader()
 
     def testLoadAll(self):

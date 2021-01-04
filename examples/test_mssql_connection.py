@@ -13,34 +13,47 @@ import logging
 from sqlalchemy import create_engine
 import pymssql
 
-logging.basicConfig(format='%(asctime)s %(levelname)s %(name)s:%(message)s'
-                    , datefmt='%d-%b-%Y %H:%M:%S'
-                    , level=logging.DEBUG)
+logging.basicConfig(
+    format="%(asctime)s %(levelname)s %(name)s:%(message)s",
+    datefmt="%d-%b-%Y %H:%M:%S",
+    level=logging.DEBUG,
+)
 
 logger = logging.getLogger(__name__)
 
-mssqlHost = 'localhost'
-mssqlPort = '1433'
-mssqlUser = '.\peek'
-mssqlPass = 'PASSWORD'
-mssqlDbName = 'peek'
+mssqlHost = "localhost"
+mssqlPort = "1433"
+mssqlUser = ".\peek"
+mssqlPass = "PASSWORD"
+mssqlDbName = "peek"
 
-sqlaEngineUrl = 'mssql+pymssql://%(user)s:%(pass)s@%(host)s/%(db)s' % {
-    'host': mssqlHost,
-    'user': mssqlUser,
-    'pass': mssqlPass,
-    'db': mssqlDbName
+sqlaEngineUrl = "mssql+pymssql://%(user)s:%(pass)s@%(host)s/%(db)s" % {
+    "host": mssqlHost,
+    "user": mssqlUser,
+    "pass": mssqlPass,
+    "db": mssqlDbName,
 }
 
 sqlaEngineArgs = {"echo": True}
 
 
 def testPymssqlConnection():
-    logging.debug("Testing pymssql connection to host=%s, port=%s, user=%s, pass=%s, "
-                  "db=%s", mssqlUser, mssqlPort, mssqlUser, mssqlPass, mssqlDbName)
+    logging.debug(
+        "Testing pymssql connection to host=%s, port=%s, user=%s, pass=%s, " "db=%s",
+        mssqlUser,
+        mssqlPort,
+        mssqlUser,
+        mssqlPass,
+        mssqlDbName,
+    )
 
-    conn = pymssql.connect(server=mssqlHost, port=mssqlPort, user=mssqlUser,
-                           password=mssqlPass, database=mssqlDbName)
+    conn = pymssql.connect(
+        server=mssqlHost,
+        port=mssqlPort,
+        user=mssqlUser,
+        password=mssqlPass,
+        database=mssqlDbName,
+    )
 
     logger.debug("Created connection, testing execute")
     cursor = conn.cursor()
@@ -63,6 +76,6 @@ def testSqlalchemyConnection():
     logger.debug("Test SQL executed, result : %s", list(result)[0])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     testPymssqlConnection()
     testSqlalchemyConnection()

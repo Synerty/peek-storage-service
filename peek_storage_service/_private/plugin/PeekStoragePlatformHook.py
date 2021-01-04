@@ -1,12 +1,16 @@
 from pathlib import Path
 
-from peek_plugin_base.server.PeekStoragePlatformHookABC import PeekStoragePlatformHookABC
+from peek_plugin_base.server.PeekStoragePlatformHookABC import (
+    PeekStoragePlatformHookABC,
+)
 
 from peek_platform import PeekPlatformConfig
-from peek_plugin_base.server.PeekPlatformAdminHttpHookABC import \
-    PeekPlatformAdminHttpHookABC
-from peek_plugin_base.server.PeekPlatformServerHttpHookABC import \
-    PeekPlatformServerHttpHookABC
+from peek_plugin_base.server.PeekPlatformAdminHttpHookABC import (
+    PeekPlatformAdminHttpHookABC,
+)
+from peek_plugin_base.server.PeekPlatformServerHttpHookABC import (
+    PeekPlatformServerHttpHookABC,
+)
 
 
 class PeekStoragePlatformHook(PeekStoragePlatformHookABC):
@@ -18,6 +22,7 @@ class PeekStoragePlatformHook(PeekStoragePlatformHookABC):
     @property
     def dbConnectString(self) -> str:
         from peek_platform import PeekPlatformConfig
+
         return PeekPlatformConfig.config.dbConnectString
 
     @property
@@ -33,11 +38,13 @@ class PeekStoragePlatformHook(PeekStoragePlatformHookABC):
         if not otherPlugin:
             return None
 
-        from peek_plugin_base.server.PluginLogicEntryHookABC import \
-            PluginLogicEntryHookABC
+        from peek_plugin_base.server.PluginLogicEntryHookABC import (
+            PluginLogicEntryHookABC,
+        )
 
-        assert isinstance(otherPlugin, PluginLogicEntryHookABC), (
-            "Not an instance of PluginLogicEntryHookABC")
+        assert isinstance(
+            otherPlugin, PluginLogicEntryHookABC
+        ), "Not an instance of PluginLogicEntryHookABC"
 
         return otherPlugin
 
@@ -48,4 +55,5 @@ class PeekStoragePlatformHook(PeekStoragePlatformHookABC):
     @property
     def serviceId(self) -> str:
         import socket
+
         return "server|" + socket.gethostname()
