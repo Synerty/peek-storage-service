@@ -12,7 +12,7 @@
 import logging
 import os
 
-from pytmpdir.Directory import DirSettings
+from pytmpdir.dir_setting import DirSetting
 from vortex.DeferUtil import vortexLogFailure
 from vortex.VortexFactory import VortexFactory
 
@@ -90,11 +90,13 @@ def setupPlatform():
         )
 
     # Set the reactor thread count
-    reactor.suggestThreadPoolSize(PeekPlatformConfig.config.twistedThreadPoolSize)
+    reactor.suggestThreadPoolSize(
+        PeekPlatformConfig.config.twistedThreadPoolSize
+    )
 
     # Set paths for the Directory object
-    DirSettings.defaultDirChmod = PeekPlatformConfig.config.DEFAULT_DIR_CHMOD
-    DirSettings.tmpDirPath = PeekPlatformConfig.config.tmpPath
+    DirSetting.defaultDirChmod = PeekPlatformConfig.config.DEFAULT_DIR_CHMOD
+    DirSetting.tmpDirPath = PeekPlatformConfig.config.tmpPath
 
 
 def startListening():
@@ -149,14 +151,18 @@ def main():
     importPackages()
 
     reactor.addSystemEventTrigger(
-        "before", "shutdown", PeekPlatformConfig.pluginLoader.stopOptionalPlugins
+        "before",
+        "shutdown",
+        PeekPlatformConfig.pluginLoader.stopOptionalPlugins,
     )
     reactor.addSystemEventTrigger(
         "before", "shutdown", PeekPlatformConfig.pluginLoader.stopCorePlugins
     )
 
     reactor.addSystemEventTrigger(
-        "before", "shutdown", PeekPlatformConfig.pluginLoader.unloadOptionalPlugins
+        "before",
+        "shutdown",
+        PeekPlatformConfig.pluginLoader.unloadOptionalPlugins,
     )
     reactor.addSystemEventTrigger(
         "before", "shutdown", PeekPlatformConfig.pluginLoader.unloadCorePlugins
@@ -164,10 +170,14 @@ def main():
 
     # Load all plugins
     d = PeekPlatformConfig.pluginLoader.loadCorePlugins()
-    d.addCallback(lambda _: PeekPlatformConfig.pluginLoader.loadOptionalPlugins())
+    d.addCallback(
+        lambda _: PeekPlatformConfig.pluginLoader.loadOptionalPlugins()
+    )
     d.addCallback(lambda _: startListening())
     d.addCallback(lambda _: PeekPlatformConfig.pluginLoader.startCorePlugins())
-    d.addCallback(lambda _: PeekPlatformConfig.pluginLoader.startOptionalPlugins())
+    d.addCallback(
+        lambda _: PeekPlatformConfig.pluginLoader.startOptionalPlugins()
+    )
 
     def startedSuccessfully(_):
         logger.info(
