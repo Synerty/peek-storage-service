@@ -2,7 +2,10 @@ import logging
 from time import sleep
 
 from peek_plugin_base.storage.DbConnection import DbConnection
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT, ISOLATION_LEVEL_DEFAULT
+from psycopg2.extensions import (
+    ISOLATION_LEVEL_AUTOCOMMIT,
+    ISOLATION_LEVEL_DEFAULT,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +30,11 @@ class StorageInit:
             cursor.execute("ALTER EXTENSION timescaledb UPDATE")
 
             while len(rawConn.notices) < 2:
+                if "shared_preload_libraries" in rawConn.notices:
+                    raise Exception(
+                        "|shared_preload_libraries = 'timescaledb'| is "
+                        "missing from postgresql.conf"
+                    )
                 sleep(2.0)
 
             else:
