@@ -98,6 +98,15 @@ def setupPlatform():
     DirSetting.defaultDirChmod = PeekPlatformConfig.config.DEFAULT_DIR_CHMOD
     DirSetting.tmpDirPath = PeekPlatformConfig.config.tmpPath
 
+    # Setup manhole
+    if PeekPlatformConfig.config.manholeEnabled:
+        start_manhole(
+            PeekPlatformConfig.config.manholePort,
+            PeekPlatformConfig.config.manholePassword,
+            PeekPlatformConfig.config.manholePublicKeyFile,
+            PeekPlatformConfig.config.manholePrivateKeyFile,
+        )
+
 
 def startListening():
     from peek_platform import PeekPlatformConfig
