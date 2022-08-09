@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ 
- *  Copyright Synerty Pty Ltd 2020
+ *  Copyright Synerty HQ Pty Ltd 2020
  *
  *  This sw_upload is proprietary, you are not free to copy
  *  or redistribute this code in any format.
  *
  *  All rights to this sw_upload are reserved by
- *  Synerty Pty Ltd
+ *  Synerty HQ Pty Ltd
  *
 """
 import logging

@@ -1,11 +1,11 @@
 """
- *  Copyright Synerty Pty Ltd 2016
+ *  Copyright Synerty HQ Pty Ltd 2016
  *
  *  This software is proprietary, you are not free to copy
  *  or redistribute this code in any format.
  *
  *  All rights to this software are reserved by
- *  Synerty Pty Ltd
+ *  Synerty HQ Pty Ltd
  *
 """
 import logging
