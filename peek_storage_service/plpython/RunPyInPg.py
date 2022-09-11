@@ -25,7 +25,7 @@ class _RunPyInPgResultTuple(Tuple):
 def runPyInPgBlocking(
     dbSessionCreator: DbSessionCreator,
     classMethodToRun: Callable,
-    classMethodToImportTuples: Optional[Callable],
+    classMethodToImportTuples: Optional[Callable] = None,
     *args,
     **kwargs
 ) -> Any:
