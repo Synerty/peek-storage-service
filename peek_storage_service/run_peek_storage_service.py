@@ -13,6 +13,7 @@ import logging
 import os
 
 from pytmpdir.dir_setting import DirSetting
+from setproctitle import setproctitle
 from vortex.DeferUtil import vortexLogFailure
 from vortex.VortexFactory import VortexFactory
 
@@ -39,6 +40,7 @@ def setupPlatform():
     from peek_platform import PeekPlatformConfig
 
     PeekPlatformConfig.componentName = peekStorageName
+    setproctitle(PeekPlatformConfig.componentName)
 
     # Tell the platform classes about our instance of the pluginSwInstallManager
     from peek_storage_service._private.service.sw_install.PluginSwInstallManager import (
