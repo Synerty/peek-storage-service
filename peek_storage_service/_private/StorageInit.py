@@ -17,6 +17,25 @@ class StorageInit:
     def runPreMigrate(self):
         self._upgradeTimescaleDbExtension()
 
+        from .alembic.objects import object_load_paylaod_tuples
+        from .alembic.objects import object_run_generic_python
+        from .alembic.objects import object_run_worker_task_python
+
+        session = self._dbConnection.ormSessionCreator()
+
+        objects = (
+            object_load_paylaod_tuples,
+            object_run_generic_python,
+            object_run_worker_task_python,
+        )
+
+        for obj in objects:
+            logger.debug("(Re)creating object %s", obj.__name__)
+            session.execute(obj.sql)
+
+        session.commit()
+        session.close()
+
     def runPostMigrate(self):
         pass
 
