@@ -22,7 +22,10 @@ dbConn = None
 
 
 def setupDbConn(
-    dbConnectString: str, metadata: MetaData, alembicDir: str, dbEngineArgs: Dict
+    dbConnectString: str,
+    metadata: MetaData,
+    alembicDir: str,
+    dbEngineArgs: Dict,
 ):
     global dbConn
     dbConn = DbConnection(
