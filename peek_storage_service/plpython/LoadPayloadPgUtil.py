@@ -50,11 +50,7 @@ def callPGLoadPayloadTuplesBlocking(
         )
 
         resultJsonStr: str = next(session.execute(sqlFunc))[0]
-
         resultJson: Dict = json.loads(resultJsonStr)
-        if resultJson["encodedPayload"]:
-            resultJson["encodedPayload"] = resultJson["encodedPayload"].encode()
-
         return _LoadPayloadTupleResult(**resultJson)
 
     finally:
