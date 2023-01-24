@@ -17,6 +17,7 @@ class StorageInit:
     def runPreMigrate(self):
         self._upgradeTimescaleDbExtension()
 
+    def runPostMigrate(self):
         from .alembic.objects import object_load_paylaod_tuples
         from .alembic.objects import object_run_generic_python
         from .alembic.objects import object_run_worker_task_python
@@ -35,9 +36,6 @@ class StorageInit:
 
         session.commit()
         session.close()
-
-    def runPostMigrate(self):
-        pass
 
     def _upgradeTimescaleDbExtension(self):
         rawConn = self._dbConnection.dbEngine.raw_connection()
